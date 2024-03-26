@@ -95,7 +95,7 @@ def batch() -> None:
             print(f"ERROR: bad format on image: {f}")
 
 
-add_dir_label = Label(text="Button will prompt you to choose a directory. Pick the one containing images, etc.",
+add_dir_label = Label(text="Button will prompt you to choose a directory.",
                       wraplength=wrap)
 add_directory = Button(text='Path', command=parse_directory)
 

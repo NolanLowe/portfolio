@@ -1,7 +1,0 @@
-{
-    "TextToMorseCode": {
-        "name": "TextToMorseCode",
-        "link": "https://github.com/NolanLowe/portfolio/tree/af93a82f3b3b0dac414c34c074f6be3e25b3d95b/TextToMorseCode",
-        "description": "Coverts text message to morse code. Console based."
-    }
-}
