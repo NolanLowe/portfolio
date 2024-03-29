@@ -1,23 +1,29 @@
-import time
+from time import time
 
-
-class Timer:
+class Timer():
     def __init__(self):
-        self.starting_time = None
+        self.current_time = 0
+        self.started = False
 
-    def start(self) -> None:
-        """
-        'starts' the timer. Gets current time in S, to be used to divine time elapsed at a later date.
-        :return: None
-        """
-        self.starting_time = time.time()
+    def start(self):
+        self.current_time = time()
+        self.started = True
 
-    def get_elapsed_time(self) -> str:
-        """
-        gets time passed since start of timer
-        :return: string: MM:SS.MS
-        """
-        seconds = round(time.time() - self.starting_time, 2)
-        minutes = seconds % 60
-        seconds -= (60 * minutes)
-        return f"{minutes:0>2}:{seconds}"
+
+    def get_elapsed_time(self):
+        if self.current_time == 0:
+            return 0
+        else:
+            return time() - self.current_time
+
+    def get_str_time(self):
+        time = round(self.get_elapsed_time(), 2)
+        return f"{time:0>4}"
+
+    def get_minutes(self):
+        return self.get_elapsed_time() / 60
+
+    def reset(self):
+        self.current_time = 0
+        self.started = False
+

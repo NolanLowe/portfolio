@@ -1,29 +1,65 @@
-from tkinter import Tk, Button
-from timer import Timer
+from typer import Typer
 from prompter import Prompter
-from texter import Texter
+from timelabel import TimeLabel
+from wpm_label import WPM
+from accuracylabel import AccuracyLabel
+from tkinter import Tk, font, Label, Event, END
+from checker import Checker, line_complete
 
-prompter_sourcetext = "chaff.txt"
+window = Tk()
+
+typer = Typer(window)
+prompter = Prompter(window, font=font.nametofont('TkTextFont'))
+tl = TimeLabel(
+    Label(window, text="TIME")
+)
+wpm = WPM(
+    Label(window, text="WPM")
+)
+acc = AccuracyLabel(
+    Label(window, text="ACC")
+)
+
+typer.grid(row=2, column=0, columnspan=3, padx=5, pady=5)
+prompter.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
+tl.label.grid(row=0, column=0, padx=5, pady=5)
+wpm.label.grid(row=0, column=1, padx=5, pady=5)
+acc.label.grid(row=0, column=2, padx=5, pady=5)
 
 
-def main():
-    window = Tk()
-
-    clock = Timer()
-
-    prompter = Prompter(window)
-    text = prompter.flourish()
-    prompter.grid(row=0, column=0, columnspan=3)
-
-    texter = Texter(window, text=text)
-    texter.grid_configure(row=1, column=0, columnspan=3)
-
-    info = Button(bitmap='question')
-    info.grid_configure(row=2, column=3, sticky="E")
-
-    window.mainloop()
+def enter(event):
+    if line_complete():
+        Checker.filehandler.get_next()
+        typer.delete(0, END)
+        typer.load()
+        prompter.print()
+    else:
+        pass
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    main()
+def keypress(event: Event):
+    print("key:", event.char, 'code:', event.keycode)
+
+    if event.keycode == 13:
+        return
+
+    if not Checker.timer.started:
+        Checker.timer.start()
+
+    typer.load()
+    prompter.print()
+    wpm.update()
+    tl.update()
+    acc.update()
+
+    return "break"
+
+
+typer.bind('<Return>', enter)
+typer.bind('<KeyRelease>', keypress)
+prompter.print()
+
+window.mainloop()
+
+
+

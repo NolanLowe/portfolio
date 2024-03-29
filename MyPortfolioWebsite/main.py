@@ -1,16 +1,16 @@
 import json
-# from flask_bootstrap import Bootstrap4
 from flask import Flask, render_template, url_for
 import pathlib
 import os
 from parser import Parser
 
 app = Flask(__name__)
-# bootstrap = Bootstrap4(app)
+
 
 
 def load_projects() -> Parser:
-    git_lnk = 'https://github.com/NolanLowe/portfolio/tree/e91af27b29f4e6ea615172e1d3a69660dc6a3b68/'
+    git_lnk = 'https://github.com/NolanLowe/portfolio/tree/main/'
+    git_lnk.replace()
     root = pathlib.Path(os.getcwd())
 
     readme_files = []
