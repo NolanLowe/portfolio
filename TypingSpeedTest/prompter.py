@@ -5,20 +5,21 @@ from tkinter.font import Font
 
 
 class Prompter(Canvas, Checker):
-    def __init__(self, master, font: Font, width=800, height=100):
+    def __init__(self, master, font: Font, width=600, height=30):
         super().__init__(master, width=width, height=height)
         # , relief='raised', borderwidth=5
         self.tkfont = font
+        self.w = width
+        self.h = height
 
     def print(self):
         self.delete('all')
         line = Checker.filehandler.get().split()
         typed_line = Checker.typed_line.split()
-        print("typed line:", typed_line)
-        x = 20
-        y = 20
-        word_height = round(self.tkfont.metrics('linespace') * 1.5)
-        word_spacing = round(0.4 * self.tkfont['size'])
+
+        total_line_width = self.tkfont.measure(Checker.filehandler.get())
+        x = (self.w - total_line_width) / 2
+        y = (self.h - self.tkfont.metrics('linespace')) / 2
 
         for i in range(len(line)):
             word_length = self.tkfont.measure(line[i])
@@ -29,5 +30,10 @@ class Prompter(Canvas, Checker):
                     self.create_text(x, y, text=line[i], stipple='', fill='red', anchor="nw")
             else:
                 self.create_text(x, y, text=line[i], anchor="nw")
-            x += word_length + word_spacing
-        pass
+            x += word_length
+
+            space = self.tkfont.measure(" ")
+            self.create_text(x, y, text=" ", anchor="nw")
+            x += space
+
+

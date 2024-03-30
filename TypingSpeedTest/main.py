@@ -29,6 +29,8 @@ acc.label.grid(row=0, column=2, padx=5, pady=5)
 
 def enter(event):
     if line_complete():
+        Checker.timer.pause()
+        tl.stop()
         Checker.filehandler.get_next()
         typer.delete(0, END)
         typer.load()
@@ -40,17 +42,19 @@ def enter(event):
 def keypress(event: Event):
     print("key:", event.char, 'code:', event.keycode)
 
-    if event.keycode == 13:
+    if event.keycode in [13, 16, 9]:  # enter, shift, tab
         return
 
-    if not Checker.timer.started:
+    if Checker.timer.is_going is False:
         Checker.timer.start()
+
+    if tl.has_started() is False:
+        tl.start()
 
     typer.load()
     prompter.print()
     wpm.update()
-    tl.update()
-    acc.update()
+    acc.update(event)
 
     return "break"
 

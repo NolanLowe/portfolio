@@ -17,4 +17,8 @@ class Checker:
     typed_line: str = ""
 
     def __init__(self):
+        self.monitor = None
         pass
+
+    def carriage(self):
+        self.monitor = None

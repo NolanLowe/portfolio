@@ -9,9 +9,11 @@ class FileHandler:
             self.sentences = [line + "." for line in self.sentences]
 
         self.sentences.insert(0, "Ready to go?")
-        self.sentences.insert(0, "Statistics are displayed up top!")
-        self.sentences.insert(0, "Start typing!")
-        #The timer starts when you start.
+        self.sentences.insert(0, "Remember these <>?")
+        self.sentences.insert(0, "It resumes when you enter your first letter.")
+        self.sentences.insert(0, "The time stops after each line.")
+        self.sentences.insert(0, "Start typing!!")
+        # The timer starts when you start.
 
         self.index = 0
         self.last = len(self.sentences)
