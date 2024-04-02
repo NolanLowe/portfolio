@@ -12,7 +12,7 @@ class TimeLabel(Checker):
         self.stopped = False
         self.iterations = 0
 
-    def __update(self, delay: float = 0.13):
+    def __update(self, delay: float = 0.07):
         self.label.configure(text=f"TIME:{Checker.timer.get_str_time()}s")
         self.label.master.update()
         sleep(delay)

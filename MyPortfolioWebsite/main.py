@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 def load_projects() -> Parser:
     git_lnk = 'https://github.com/NolanLowe/portfolio/tree/main/'
-    git_lnk.replace()
     root = pathlib.Path(os.getcwd())
 
     readme_files = []

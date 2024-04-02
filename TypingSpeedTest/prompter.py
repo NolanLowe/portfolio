@@ -20,20 +20,20 @@ class Prompter(Canvas, Checker):
         total_line_width = self.tkfont.measure(Checker.filehandler.get())
         x = (self.w - total_line_width) / 2
         y = (self.h - self.tkfont.metrics('linespace')) / 2
+        space = self.tkfont.measure(" ")
 
-        for i in range(len(line)):
-            word_length = self.tkfont.measure(line[i])
-            if i < len(typed_line):
-                if typed_line[i] == line[i]:
-                    self.create_text(x, y, text=line[i], stipple='', fill='green', anchor="nw")
+        for i in range(len(line)):  # go through each word in the full actual prompter line
+            for j in range(len(line[i])):  # go through each letter of each full, target word
+                letter_length = self.tkfont.measure(line[i][j])
+                if i < len(typed_line) and j < len(typed_line[i]):  # check if the user has typed this far, only want to color code for letters they have typed.
+                    if typed_line[i][j] == line[i][j]:
+                        self.create_text(x, y, text=line[i][j], stipple='', fill='green', anchor="nw")
+                    else:
+                        self.create_text(x, y, text=line[i][j], stipple='', fill='red', anchor="nw")
                 else:
-                    self.create_text(x, y, text=line[i], stipple='', fill='red', anchor="nw")
-            else:
-                self.create_text(x, y, text=line[i], anchor="nw")
-            x += word_length
+                    self.create_text(x, y, text=line[i][j], anchor="nw")    # user hasn't typed that far in the prompt, no color code
+                x += letter_length
 
-            space = self.tkfont.measure(" ")
+            # individual word has ended, add a space (they've been removed by split())
             self.create_text(x, y, text=" ", anchor="nw")
             x += space
-
-
