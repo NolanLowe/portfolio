@@ -20,7 +20,7 @@ class Brickler:
 
         for y in range(height - total_brick_height - total_v_spacing, height,
                        brickheight + v_spacing):
-            for x in range(-width + round(brickwidth / 2) + h_spacing, width - round(brickwidth / 2) - h_spacing, brickwidth + h_spacing):
+            for x in range(-width + round(brickwidth / 2) + h_spacing + 5, width - round(brickwidth / 2) - h_spacing, brickwidth + h_spacing):
                 new_brick = Brick()
                 new_brick.goto(x, y)
                 self.bricks.append(new_brick)

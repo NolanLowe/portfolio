@@ -1,4 +1,6 @@
 import turtle
+import threading
+
 
 
 class Object(turtle.Turtle):
@@ -19,3 +21,7 @@ class Object(turtle.Turtle):
 
     def __get_height(self):
         return self.shapesize()[0] * 20
+
+    def get_thread(self, function, **kwargs):
+        thread = threading.Thread(target=function, daemon=True, kwargs=kwargs)
+        return thread

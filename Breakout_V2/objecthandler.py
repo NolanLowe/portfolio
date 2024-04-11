@@ -4,6 +4,8 @@ from paddle import Paddle
 from ball import Ball
 from brickler import Brickler
 from brick import Brick
+import random
+import threading
 
 prev_pos = None
 sep_x, sep_y, size_x, size_y = 0, 0, 0, 0
@@ -90,8 +92,6 @@ class ObjectHandler:
                 return obj.ycor() + obj.height / 2
             case 'b':
                 return obj.ycor() - obj.height / 2
-            case default:
-                return "Invalid selection"
 
     def collided(self, obj1: Object, obj2: Object):
         global sep_x, sep_y, size_x, size_y
@@ -112,8 +112,13 @@ class ObjectHandler:
         else:
             if isinstance(obj2, Brick):
                 obj2.flag()
-            elif isinstance(obj1, Brick):
-                obj1.flag()
+            elif isinstance(obj2, Paddle):
+                self.paddle.jiggle()
+                obj1.off_paddle = True
+                if self.paddle_moving_left:
+                    obj1.offset = random.randint(0, 20)
+                elif self.paddle_moving_right:
+                    obj1.offset = -random.randint(0, 20)
             return True
 
     def are_touching(self, obj1: Object, obj2: Object):
@@ -189,7 +194,23 @@ class ObjectHandler:
 
         if isinstance(obj, Ball) and distance < self.ball_speed:
             obj.rebound(previous_axis)
-            obj.forward(self.ball_speed - distance)
+            self.__legalize_move_remainder(obj, distance, distance, previous_axis)
+
+    def __legalize_move_remainder(self, obj: Object, distance: int, total_distance: int, prev_axis=None):
+        prev_pos = obj.pos()
+        obj.forward(distance)
+
+        legal, axis = self.is_legal(obj)
+        obj.goto(prev_pos)
+
+        if not legal:
+            self.__legalize_move_remainder(obj, distance - 1, distance, axis)
+            return
+
+        obj.forward(distance)
+
+        if isinstance(obj, Ball) and distance < total_distance:
+            self.__legalize_move_remainder(obj, distance, distance, axis)
 
     def move_paddle(self):
         if self.paddle_moving_left or self.paddle_moving_right:
