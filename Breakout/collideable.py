@@ -7,7 +7,6 @@ class Collideable(Turtle):
         self.color("white")
         self.penup()
         self.movespeed = None
-        self.is_brick = False
 
         screen = self.screen
         self.max_x = screen.window_width() / 2
@@ -33,7 +32,7 @@ class Collideable(Turtle):
         return False, None
 
     def collision_axis(self, obj):
-        if obj.xcor() - obj.width< self.xcor() < obj.xcor() + obj.width:
+        if obj.xcor() - obj.width < self.xcor() < obj.xcor() + obj.width:
             return "y"
         else:
             return "y"
@@ -63,7 +62,7 @@ class Collideable(Turtle):
         self.max_x = screen.window_width() / 2
         self.mix_x = -screen.window_width() / 2
         self.max_y = screen.window_height() / 2
-        self.min_y = -screen.window_height() / 2
+        self.min_y = -screen.window_height() / 2 - 400
 
         # shapesize = (Height, Width, Border)
         self.width = self.shapesize()[1] * 10

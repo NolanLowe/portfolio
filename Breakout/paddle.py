@@ -14,20 +14,21 @@ class Paddle(Collideable):
         self.update()
 
     def move(self):
+        inbounds, axis = self.in_bounds(Paddle.movespeed)
         if self.moving_left:
-            self.setheading(180)
-            if self.in_bounds(Paddle.movespeed):
+            if inbounds:
                 self.forward(Paddle.movespeed)
         elif self.moving_right:
-            self.setheading(0)
-            if self.in_bounds(Paddle.movespeed):
+            if inbounds:
                 self.forward(Paddle.movespeed)
 
     def start_left(self):
         self.moving_left = True
+        self.setheading(180)
     def stop_left(self):
         self.moving_left = False
     def start_right(self):
         self.moving_right = True
+        self.setheading(0)
     def stop_right(self):
         self.moving_right = False

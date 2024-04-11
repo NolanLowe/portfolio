@@ -5,16 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0c4ef9c3-fb8a-4257-900c-276a088ac088" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/collideable.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Breakout.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Breakout.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Breakout_V2/ball.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Breakout_V2/object.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Breakout_V2/objecthandler.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Breakout_V2/paddle.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Breakout_V2/readme.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../MyPortfolioWebsite/static/assets/Breakout_ss.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ball.py" beforeDir="false" afterPath="$PROJECT_DIR$/ball.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/brick.py" beforeDir="false" afterPath="$PROJECT_DIR$/brick.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/chimp.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/fist.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/collideable.py" beforeDir="false" afterPath="$PROJECT_DIR$/collideable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game.py" beforeDir="false" afterPath="$PROJECT_DIR$/game.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/paddle.py" beforeDir="false" afterPath="$PROJECT_DIR$/paddle.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -41,15 +41,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.da.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.da.executor": "Run",
+    "Python.main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "C:/Users/nolan/Desktop/portfolio/Breakout_V2"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
       <module name="Breakout" />

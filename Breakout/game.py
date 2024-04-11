@@ -4,10 +4,10 @@ from paddle import Paddle
 from ball import Ball
 from brick import Brick
 from turtle import *
+import random
 
 
 class Game:
-    framerate = 1 / 60
 
     def __init__(self, width=520, height=660):
         self.screen = Screen()
@@ -40,23 +40,32 @@ class Game:
 
 
         # self.screen.onkey()
-        ball = Ball(self.collideables)
-        ball.goto(self.ball_start_pos)
-        ball.setheading(70)
+        self.ball = [Ball(self.collideables, self.paddle)]
+        self.ball[0].goto(self.ball_start_pos)
+        self.ball[0].setheading(70)
 
-        while True:
-            time.sleep(Game.framerate)
-            self.paddle.move()
-            if not ball.move():
-                ball = self.reset_ball(ball)
-            self.screen.update()
+        self.spawn_additional_ball()
+
+        self.run()
+        self.screen.mainloop()
 
 
+    def run(self):
+        self.paddle.move()
+        if not self.ball[0].move():
+            self.reset_ball()
+        if (len(self.ball) > 1):
+            for ball in self.ball[1:]:
+                ball.move()
+        self.screen.update()
+        self.screen.ontimer(self.run, 10)
 
-    def reset_ball(self, b):
-        b.hideturtle()
-        del b
-        ball = Ball(self.collideables)
-        ball.goto(self.ball_start_pos)
-        ball.setheading(70)
-        return ball
+    def spawn_additional_ball(self):
+        new_ball = Ball(self.collideables, self.paddle)
+        new_ball.setheading(random.randint(60, 80))
+        self.ball.append(new_ball)
+
+
+    def reset_ball(self):
+        self.ball[0].goto(self.ball_start_pos)
+        self.ball[0].setheading(70)
