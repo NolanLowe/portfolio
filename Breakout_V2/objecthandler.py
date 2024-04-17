@@ -1,16 +1,16 @@
-import turtle
+import random
+
+from ball import Ball
+from brick import Brick
+from brickler import Brickler
 from object import Object
 from paddle import Paddle
-from ball import Ball
-from brickler import Brickler
-from brick import Brick
-import random
-import threading
 
 prev_pos = None
 sep_x, sep_y, size_x, size_y = 0, 0, 0, 0
 o1l, o1r, o1t, o1b = 0, 0, 0, 0
 o2l, o2r, o2t, o2b = 0, 0, 0, 0
+edge, value, axis, inbounds, legal = 0, 0, 0, 0, 0
 
 
 class ObjectHandler:
@@ -110,15 +110,15 @@ class ObjectHandler:
         if sep_x > size_x or sep_y > size_y:
             return False
         else:
+            obj1.jiggle()
             if isinstance(obj2, Brick):
                 obj2.flag()
             elif isinstance(obj2, Paddle):
                 self.paddle.jiggle()
-                obj1.off_paddle = True
                 if self.paddle_moving_left:
-                    obj1.offset = random.randint(0, 20)
+                    obj1.angled_shot(random.randint(0, 10))
                 elif self.paddle_moving_right:
-                    obj1.offset = -random.randint(0, 20)
+                    obj1.angled_shot(-random.randint(0, 10))
             return True
 
     def are_touching(self, obj1: Object, obj2: Object):
@@ -149,6 +149,7 @@ class ObjectHandler:
         return False, None
 
     def is_legal(self, obj: Object):
+        global edge, value, axis, inbounds
         """
         check if obj has collided with any others, and is still in bounds
         :param obj:
@@ -171,7 +172,7 @@ class ObjectHandler:
 
 
     def legalize_move(self, obj: Object, distance: int, previous_axis=None):
-        global prev_pos
+        global prev_pos, axis, legal
         """
         moves object forward in existing heading by [distance] units
         in the event that the full distance results in a collision or OOB,

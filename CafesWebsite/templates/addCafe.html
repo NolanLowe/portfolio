@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <form method="POST" action="{{url_for('add_cafe')}}">
+    <h1>Add Cafe</h1>
+    {% for field in form %}
+       {{ field.label() }}{{ field() }}
+   {% endfor %}
+  </form>
+{% endblock %}

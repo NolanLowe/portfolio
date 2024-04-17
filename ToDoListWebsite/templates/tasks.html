@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Index{% endblock %}
+{% block content %}
+
+<div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+  <div class="list-group">
+
+{% if current_user.is_authenticated %}
+    <form method="POST" action="{{url_for('tasks')}}" name="tasksdone">
+          {{ form.csrf_token }}
+    {% for task in current_user.tasks %}
+    <label class="list-group-item d-flex gap-3">
+      <input class="form-check-input flex-shrink-0" type="checkbox" name="task{{loop.index}}" style="font-size: 1.375em;">
+      <span class="pt-1 form-checked-content">
+        <strong>{{ task.description }}</strong>
+        <small class="d-block text-body-secondary">
+          <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#calendar-event"></use></svg>
+          {% if task.by_day %}
+          {{ task.by_day }}
+          {% endif %}
+          {% if task.by_hour %}
+          {{ task.by_hour }}
+          {% endif %}
+        </small>
+      </span>
+    </label>
+    {% endfor %}
+
+          <button class="btn btn-primary my-3 py-3 bg-body-tertiary flex-shrink-0 pe-none" type="submit" style="font-size: 1em;" name="finishtasks">
+        Mark Checked Done
+        </button>
+    </form>
+{% endif %}
+
+<form method="POST" action="{{url_for('tasks')}}" name="newtask">
+  {{ form.csrf_token }}
+    <label class="list-group-item d-flex gap-3 my-3 py-3">
+      <button class="btn btn-primary bg-body-tertiary flex-shrink-0 pe-none" type="submit" style="font-size: 1em;" name="newtask">
+        add
+        </button>
+      <span class="pt-1 form-checked-content">
+        <span contenteditable="true" class="w-100">
+          {{ form.description(class="form-control",id="floatingInput",required='required',value="",placeholder="Add new task...") }}
+        </span>
+        <small class="d-block text-body-secondary">
+          <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"></use></svg>
+          {{ form.day(class="form-control",id="floatingInput",required='required',value="",placeholder="do by...", required=False) }}
+        </small>
+
+        <small class="d-block text-body-secondary">
+        <svg class="bi me-1" width="1em" height="1em"><use xlink:href="#list-check"></use></svg>
+        {{ form.hour(class="form-control",id="floatingInput",required='required',value="",placeholder="do by...", required=False) }}
+        </small>
+      </span>
+    </label>
+</form>
+
+
+  </div>
+</div>
+
+{% endblock %}
