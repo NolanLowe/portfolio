@@ -63,6 +63,23 @@ def load_user(user_id):
         return user
 
 
+@app.route("/complete_tasks", methods=['GET', 'POST'])
+def complete_tasks():
+    task_ids = []
+    print(request.form.to_dict())
+    for (key, value) in request.form.to_dict().items():
+        if "task" in key:
+            task_ids.append(int(key[4:]))
+
+    print(task_ids)
+    for task in flask_login.current_user.tasks:
+        if task.id in task_ids:
+            db.session.delete(task)
+    db.session.commit()
+
+    return redirect(url_for('tasks'))
+
+
 @app.route("/")
 def home():
     if flask_login.current_user.is_authenticated:
@@ -91,11 +108,9 @@ def login():
 @app.route('/tasks', methods=['GET', 'POST'])
 def tasks():
     form = TaskForm()
+    complete_task_form = CompleteTaskForm()
 
-    if request.method == "POST" and 'finishtasks' in request.form:
-        print(request.json)
-
-    elif form.validate_on_submit():
+    if form.validate_on_submit():
         task = ToDo(
             description=form.description.data,
             by_day=form.day.data,
@@ -106,14 +121,14 @@ def tasks():
             if task.description == existing_task.description and task.userid == existing_task.userid:
                 flash("task already exists!")
                 new_form = TaskForm()
-                return render_template('tasks.html', form=new_form)
+                return render_template('tasks.html', form=new_form, complete_task_form=complete_task_form)
 
         db.session.add(task)
         db.session.commit()
         new_form = TaskForm()
-        return render_template('tasks.html', form=new_form)
+        return render_template('tasks.html', form=new_form, complete_task_form=complete_task_form)
 
-    return render_template('tasks.html', form=form)
+    return render_template('tasks.html', form=form, complete_task_form=complete_task_form)
 
 
 

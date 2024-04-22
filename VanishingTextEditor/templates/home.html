@@ -1,0 +1,92 @@
+<html>
+<head>
+    <title>VanishingTextEditor</title>
+    <style>
+        textarea {
+            width:80%;
+            height: 100%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        div.textAreaSpace {
+            display: flex;
+            justify-content: center;
+        }
+        .timeField {
+          text-align: right; 
+          display: inline;   
+        }
+        #container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+    </style>
+</head>
+
+<h2>Welcome to the VanishingTextEditor</h2>
+<h4>If you stop typing for more than 5 seconds, the screen gets cleared.</h4>
+
+<div id="container">
+<h1 id="timeField">5</h5>
+</div>
+
+<div id="textAreaSpace">
+<textarea id="tArea">Start typing!</textarea>
+</div>
+
+<script>
+var start_time = Date.now();
+var area = document.querySelector('textarea');
+
+if (area.addEventListener) {
+  area.addEventListener('input', () => {
+    start_time = Date.now();
+  }, false);
+} else if (area.attachEvent) {
+  area.attachEvent('onpropertychange', () => {
+    start_time = Date.now();
+  });
+}
+
+function clearArea() {
+    if (Date.now() - start_time >= 5000){
+        document.getElementById("tArea").value = "";
+        start_time = Date.now();
+    }
+    document.getElementById("timeField").innerHTML = 5 - Math.round(((Date.now() - start_time) / 1000));
+}
+setInterval(clearArea, 1000)
+
+
+// function countDown() {
+//     delta = Date.now() - start_time;
+//     // user hasn't made any edits at all 0> just pass
+//     if (document.getElementById("tArea").value == ""){
+//         return;
+//     }
+//     // user hasn't typed anything new
+//     else if (document.getElementById("tArea").value == start_typed){
+//         // it's been more than 5 seconds, delete everything
+//         if (delta >= 5000){
+//             document.getElementById("tArea").value = "";
+//             start_time = Date.now()
+//             start_typed = ""
+//         }
+//         // less than 5 seconds, totally fine. No need to do anything. BUt the timer is still going.
+//         else {
+//             return;
+//         }
+//     }
+//     // prompt isn't blank, OR unchanged, must be changed: store the changes, reset the timer.
+//     else{
+//         start_time = Date.now();
+//         start_typed = document.getElementById("tArea").value;
+//     }
+// }
+
+// setInterval(countDown, 1000)
+
+</script>
+</html>
