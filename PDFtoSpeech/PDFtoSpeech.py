@@ -1,6 +1,8 @@
 from pypdf import PdfReader
 from gtts import gTTS
 import os
+
+
 class PDFtoSpeech:
     def __init__(self):
         self.text = ""
@@ -18,12 +20,21 @@ class PDFtoSpeech:
             page = reader.pages[i]
             self.text += page.extract_text()
 
-    def to_speech(self):
-        audioPDF = gTTS(text=self.text, lang='en', slow=False)
+    def to_speech(self, slow: bool = 0):
+        """
+        :param slow: false = fast speed, true = slow speed. default false (FAST)
+        :return: (None, None) if no problems, (message, error) otherwise.
+        """
+        try:
+            audio_pdf = gTTS(text=self.text, lang='en', slow=slow)
 
-        # Saving the converted audio in a mp3 file named
-        # welcome
-        audioPDF.save(f"{self.filename}.mp3")
+            # Saving the converted audio in a mp3 file named
+            # welcome
+            audio_pdf.save(f"{self.filename}.mp3")
 
-        # Playing the converted file
-        os.system(f"{self.filename}.mp3")
+            # Playing the converted file
+            os.system(f"{self.filename}.mp3")
+
+            return None, None
+        except AssertionError:
+            return "File does not contain accessible text.", AssertionError

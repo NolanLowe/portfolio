@@ -1,11 +1,6 @@
-from PDFtoSpeech import PDFtoSpeech
+from P2S_GUI import P2S_GUI
 
-p = PDFtoSpeech()
-p.load(filename='test_multipage.pdf')
-p.to_speech()
-
-
-
+p2s = P2S_GUI()
 
 
 
